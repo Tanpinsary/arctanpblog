@@ -7529,6 +7529,26 @@ body[data-type="link"] #page .page-title {
     padding: 0px 20px 0px;
   }
 }
+div#bannerGroup {
+  margin-right: 10px;
+  width: calc(51% - 10px) !important;
+}
+@media screen and (max-width: 768px) {
+  #home_top {
+    padding: 0px 15px;
+  }
+  #topPostGroup {
+    height: 280px;
+  }
+  #swiper_container_blog {
+    padding: 0 10px;
+  }
+}
+@media screen and (max-width: 1200px) {
+  div#bannerGroup {
+    display: none !important;
+  }
+}
 #content-inner #recent-posts > .recent-post-item > .recent-post-info > .content {
   opacity: 0;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
@@ -10952,6 +10972,12 @@ h1.page-title + .tag-cloud-list {
   -ms-transition: 0.6s;
   transition: 0.6s;
   overflow: hidden;
+  -webkit-animation: header 5s linear forwards;
+  -moz-animation: header 5s linear forwards;
+  -o-animation: header 5s linear forwards;
+  -ms-animation: header 5s linear forwards;
+  animation: header 5s linear forwards;
+  animation-timeline: view();
   background-color: transparent;
 }
 #page-header.post-bg #nav {
