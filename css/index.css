@@ -2784,7 +2784,7 @@ i.anzhiyu-icon-hashtag {
 }
 [data-theme="dark"] {
   --anzhiyu-meta-theme-post-color: #1d1e22;
-  --anzhiyu-meta-theme-color: #000;
+  --anzhiyu-meta-theme-color: #fff;
   --anzhiyu-blue: #5ca1ff;
   --anzhiyu-blue-tint: rgba(92,161,255,0.1);
   --anzhiyu-theme-op-deep: rgba(0,132,255,0.867);
@@ -2804,7 +2804,7 @@ i.anzhiyu-icon-hashtag {
   --anzhiyu-hovertext: #0a84ff;
   --anzhiyu-ahoverbg: #fff;
   --anzhiyu-scrollbar: rgba(200,200,223,0.4);
-  --anzhiyu-lighttext: #f2b94b;
+  --anzhiyu-lighttext: #fff;
   --anzhiyu-secondtext: #a1a2b8;
   --anzhiyu-scrollbar: rgba(200,200,223,0.4);
   --anzhiyu-card-btn-bg: #30343f;
