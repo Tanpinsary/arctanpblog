@@ -2672,7 +2672,7 @@ i.anzhiyu-icon-hashtag {
   --preloader-color: #fff;
   --tab-border-color: #f0f0f0;
   --tab-botton-bg: #f0f0f0;
-  --tab-botton-color: #1f2d3d;
+  --tab-botton-color: #fff;
   --tab-button-hover-bg: #dcdcdc;
   --tab-button-active-bg: #fff;
   --card-bg: #fff;
@@ -2684,7 +2684,7 @@ i.anzhiyu-icon-hashtag {
   --light-grey: #eee;
   --dark-grey: #cacaca;
   --white: #fff;
-  --text-highlight-color: #1f2d3d;
+  --text-highlight-color: #fff;
   --blockquote-color: #6a737d;
   --blockquote-bg: rgba(66,90,239,0.1);
   --reward-pop: #f5f5f5;
