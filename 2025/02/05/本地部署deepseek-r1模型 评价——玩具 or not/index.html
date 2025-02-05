@@ -1,0 +1,527 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>本地部署deepseek-r1模型 评价——玩具 or not? | arctanp</title><meta name="keywords" content="llm,deepseek-r1,实践笔记"><meta name="author" content="Tanpinsary"><meta name="copyright" content="Tanpinsary"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="本地部署deepseek-r1模型 评价——玩具 or not?"><meta name="application-name" content="本地部署deepseek-r1模型 评价——玩具 or not?"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="本地部署deepseek-r1模型 评价——玩具 or not?"><meta property="og:url" content="http://example.com/2025/02/05/本地部署deepseek-r1模型 评价——玩具 or not/index.html"><meta property="og:site_name" content="arctanp"><meta property="og:description" content="第一次试手deepseek那会正好出r1，用了几下觉得信息检索能力极强，后面ds舆论炒起来开始暴增闹钟自信心那会正好做哈佬的解密末班车，利用r1找到了大量的思路，写的py脚本几乎不用debug直接能用。（虽然但是，解密做了3个开摆了，剩下俩都有不成熟的思路硬做也说不定呢然后ds被大范围ddos服务"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://ooo.0x0.ooo/2025/01/26/OGyfUN.jpg"><meta property="article:author" content="Tanpinsary"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://ooo.0x0.ooo/2025/01/26/OGyfUN.jpg"><meta name="description" content="第一次试手deepseek那会正好出r1，用了几下觉得信息检索能力极强，后面ds舆论炒起来开始暴增闹钟自信心那会正好做哈佬的解密末班车，利用r1找到了大量的思路，写的py脚本几乎不用debug直接能用。（虽然但是，解密做了3个开摆了，剩下俩都有不成熟的思路硬做也说不定呢然后ds被大范围ddos服务"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="http://example.com/2025/02/05/%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2deepseek-r1%E6%A8%A1%E5%9E%8B%20%E8%AF%84%E4%BB%B7%E2%80%94%E2%80%94%E7%8E%A9%E5%85%B7%20or%20not/"><link rel="preconnect" href="//cdn.cbd.int"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/swiper/swiper.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: {"enable":true,"img":"https://upload-bbs.miyoushe.com/upload/2024/07/27/125766904/ba62475f396df9de3316a08ed9e65d86_5680958632268053399..png"},
+  postHeadAiDescription: {"enable":true,"gptName":"tanp","mode":"local","switchBtn":true,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"xxxx","Referer":"https://xx.xx/"},
+  diytitle: undefined,
+  LA51: undefined,
+  greetingBox: {"enable":true,"default":"喜欢视奸？","list":[{"greeting":"夜","startTime":0,"endTime":4},{"greeting":"4点了 该坠机了","startTime":4,"endTime":4},{"greeting":"tanp大概率在睡觉","startTime":5,"endTime":10},{"greeting":"呜噜呜噜摸了","startTime":10,"endTime":18},{"greeting":"该饭了","startTime":18,"endTime":19},{"greeting":"夜","startTime":19,"endTime":24}]},
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: false,
+  mainTone: undefined,
+  authorStatus: {"skills":["最大的技能就是还活着"]},
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: Tanpinsary","link":"链接: ","source":"来源: arctanp","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'arctanp',
+  title: '本地部署deepseek-r1模型 评价——玩具 or not?',
+  postAI: '',
+  pageFillDescription: '一  安装Ollama, 二 选择你想要的模型下载, 三 使用, 四 实测, 五 Deepseek-r18b切换D盘下载体验, 六  不敢锐评小谈几句第一次试手那会正好出用了几下觉得信息检索能力极强后面舆论炒起来开始暴增闹钟自信心那会正好做哈佬的解密末班车利用找到了大量的思路写的脚本几乎不用直接能用虽然但是解密做了个开摆了剩下俩都有不成熟的思路硬做也说不定呢然后被大范围服务器繁忙思考水平下降当时由于完全开源就想着本地部署一个玩玩一直拖到了年后部署了个玩玩感觉有点玩具了一安装三端都有直接官网即可当晚网极差挂着代理下了一整晚官网下载后管理员打开貌似只能下载在盘不能修改下载路径二选择你想要的模型下载本地部署模型提供了不同大小训练量的如或各个配置依照显存等酌情配置我的电脑是显存在昨晚之前一直以为是加上盘也不是多干净所以开始选择下载了最主流的下面是官网的参考版本语空间配置版本适用于一般文字编辑使用需要空余空间版本的第一代推理模型性能与相当包括从基于和的中提取的六个密集模型需要空余空间版本需要空余空间版本需要空余空间版本需要空余空间版本需要空余空间版本需要空余空间图片来自网络在输入即可下载完成后对话框弹出并以会以为开头此处表示可以正常使用三使用查看已安装的模型列表使用某模型模型名结束对话四实测按理说这玩意非常吃显存但我当时挂着模拟器打形势下问了几个信息检索类问题没截全但是可见一斑足够的弱智晚上这会把进程关了关再来试试看不下去一点纯纯胡编乱造东扯西扯扯得没边了都就在我脑子里重复着好吧这就是个玩具我放弃了的想法的时候我突然反应过来本地部署不联网训练库没月姬肯定不会给出正确的结果呃呃那我们换一个例子就拿哈佬那道测试吧先贴一个在被前他给的答案我现在要解决游戏的加强版在一个的棋盘中有些灯是开着的有些灯是关着的就像普通的游戏那样但是你不知道哪些灯是开着的哪些灯是关着的每次你进行操作后游戏只会告诉你现在还有几盏灯亮着你需要把所有灯都灭掉才能通关请给出你能想到的所有游戏策略包括但不限于如何找到哪些灯是开的哪些灯是关的如何在已知所有开的灯的位置后找到一个路径把所有灯关掉思考时间略要解决加强版问题以下是分阶段的策略一探测初始亮灯状态策略单个灯翻转探测法原理每个灯可通过特定按钮组合单独翻转按压该组合后亮灯数的变化揭示其初始状态步骤预计算对每个灯找到一组按钮组合使其仅翻转该灯需借助线性代数或已知模式逐灯测试初始亮灯数为按压对应的按钮记录新亮灯数灯初始亮灯初始灭重复所有个灯得到完整初始状态策略系统按压法原理每次按钮按压的亮灯数变化与影响区域的初始状态相关步骤依次按压每个按钮记录为初始时该按钮影响区域的亮灯数建立方程组考虑按钮影响的交叠解出初始状态缺点需解复杂方程适合编程处理二关闭所有亮灯的已知解法传统逐行消除法原理逐行关闭亮灯利用下一行的按钮消除当前行的残留步骤第行对当前行若某灯亮按下其正下方的按钮下一行同列以关闭重复直至当前行全灭第行通过特定组合如按钮模式消除剩余亮灯矩阵求逆法原理将问题建模为模线性方程组为按钮影响矩阵为初始状态步骤求解方程得按钮组合按压这些按钮即可关闭所有灯适用工具编程工具如高斯消元或查表已知解三其他辅助策略奇偶性跟踪每次按压按钮后亮灯数奇偶性翻转利用此特性减少可能的状态组合重置测试按压同一按钮两次可恢复原状态用于校准或对比亮灯数总结探测阶段优先使用单个灯翻转法需预计算组合或系统按压法确定初始状态关闭阶段应用逐行消除或矩阵求逆法找到按钮组合此策略结合数学建模与系统操作可在有限反馈下高效通关下面这个本地跑的我现在要解决游戏的加强版在一个的棋盘中有些灯是开着的有些灯是关着的就像普通的游戏那样但是你不知道哪些灯是开着的哪些灯是关着的每次你进行操作后游戏只会告诉你现在还有几盏灯亮着你需要把所有灯都灭掉才能通关请给出你能想到的所有游戏策略包括但不限于如何找到哪些灯是开的哪些灯是关的如何在已知所有开的灯的位置后找到一个路径把所有灯关掉好的我现在要解决游戏这是一个的棋盘有些灯开着有些关着我并不知道哪些灯开着每次操作后只会告诉我现在还有多少盏灯亮着目标是将所有的灯都熄灭才能通关首先我需要理解基本的游戏规则通常情况下每次按下一个灯会切换该灯以及其相邻四个方向上下左右的状态开变关关变开在版本中情况不同因为我不知道哪些灯是开着的所以无法直接识别目标我的第一步是确定棋盘上的哪几盏灯是开着的由于我不知道任何信息这一步可能需要一些随机尝试或者系统性的方法来识别开灯的位置我可能会开始随机按下棋盘上的灯记录每次操作后亮着的灯的数量如果某个操作后亮灯数量减少说明我按下了一个或多个开灯否则可能是无关的灯被切换状态这可能是一个繁琐的过程因为需要多次尝试才能找到足够的线索来确定哪些灯是开的一旦我大致确定了哪些灯是开着的下一步就是如何有效地将它们全部熄灭这类似于在已知目标的情况下解决游戏的问题通常解决游戏的方法涉及设置一个线性方程组每个方程对应一行或一列的灯状态变化具体来说我可以为每行建立一个方程表示该行需要通过哪些操作来熄灭所有灯例如如果一行有个灯我可以通过按压这些灯中的某些组合来达到关灯的目标由于游戏遵循模的数学特性即灯的状态是二进制的可以利用线性代数的方法来解决然而在版本中因为我知道哪些灯是开着的我可以将问题简化为一个确定性的方程组求解问题每按下一次灯相当于对相关的行和列进行一次操作最终需要找到一组按压操作使得所有开灯都被切换到关的位置这可能涉及编程或使用矩阵运算来解决但这对于手动解决的棋盘来说可能会过于复杂因此我可能需要寻找一种更直观的方法通过逐步消除可能性来找到正确的操作序列此外我还需要考虑每次操作对其他灯的影响按压一个灯不仅会影响该灯本身还会影响周围的灯这意味着操作之间的相互影响必须被仔细计算和处理以确保最终所有灯都被熄灭总的来说我的策略可能包括以下几个步骤随机按下棋盘上的多个灯记录每次操作后亮灯数量的变化根据这些数据推断哪些灯是开着的使用线性代数的方法或逐步消除法来确定将所有开灯熄灭的操作序列这可能是一个漫长而复杂的过程但通过系统性和耐心的尝试我相信最终能够找到解决游戏的策略策略说明第一步识别开着的灯随机按下灯从棋盘上的任意位置开始依次按下多个不同的灯每次按下后记录当前亮着的灯的数量分析数据比较每次操作后的亮灯数量与初始状态全灭的差异如果某个操作导致亮灯数量减少说明按压了至少一个开着的灯否则该操作可能无关或与其他因素相关逐步确定开灯位置通过多次尝试和比较可以逐渐确定哪些特定位置的灯是开着的注意到每次按下灯可能导致多个相邻灯状态变化因此需要考虑连锁反应的影响第二步解密开灯布局建立方程组将每个开灯视为一个变量按压操作作为方程中的系数最终目标是求解所有变量即哪些灯需要被按压以达到全灭状态使用线性代数方法由于游戏遵循模运算可以将问题转化为二元一次方程组每个方程对应一行或一列的灯状态变化变量表示是否需要按压该位置的灯求解方程利用矩阵运算或高斯消元法在模的环境下求解方程组得到所有需按压的操作序列第三步执行操作确定操作顺序根据解得的方程组确定具体的灯需要被按压考虑操作的连锁效应选择操作顺序以简化后续步骤逐步应用操作按照预设的操作序列依次按下灯观察棋盘状态变化如果在某一步骤后无法达到预期效果可能需要调整之前的决策或重新解方程组第四步优化与验证反复测试和验证通过多次实验验证解得的操作序列是否可靠确保每次操作都能按预期改变灯的状态注意棋盘的对称性和循环性寻找更高效的操作路径简化策略寻找重复或相似的操作模式减少不必要的按下次数利用已知的开灯布局进行针对性的操作加快熄灯速度第五步全局调整与适应考虑棋盘全局状态在解密过程中保持对棋盘整体状态的关注避免孤立操作影响全局效果灵活应对变化面对某些复杂情况可能需要临时调整策略或重新评估方程组的正确性灵活性是解决复杂游戏的关键第六步总结与提升记录成功案例完成一次成功的熄灯后详细记录操作过程和思考步骤分析为什么该策略有效为后续改进提供参考持续练习与改进不断尝试新的策略和方法寻找更高效或更具适应性的解决方案通过不断练习提升对棋盘状态的敏感度和预测能力第七步使用辅助工具可选编程求解方程组使用编程语言如编写程序来自动求解方程组减少人工计算误差适用于更大的棋盘或更复杂的布局情况模拟器练习利用游戏模拟器进行练习和测试快速验证策略的有效性这种工具可以帮助更好地理解每个操作的影响并优化解题方法第八步总结经验反思解题过程分析整个解题过程中可能遇到的困难和解决办法总结成功因素和失误教训为未来的策略调整提供依据制定长期计划根据当前的学习进度和目标制定后续的学习和练习计划目标是掌握多种游戏的解法并能够在不同复杂度下灵活应对第九步挑战更高的难度增加游戏难度尝试增加游戏难度如更大规模的棋盘或更高阶的操作规则通过解决更复杂的谜题提升综合能力参加比赛或竞赛如果有机会参与游戏的比赛或竞赛与其他玩家交流和切磋这是提高水平巩固策略的有效途径第十步保持耐心与坚持克服耐心限制面对复杂的谜题时保持冷静和耐心避免因一次失败而气馁认识到解题过程中的每一次尝试都是积累经验和提升能力的机会保持积极心态以积极的心态面对挑战相信通过不断的学习和实践一定能够掌握游戏的精髓本地模型第八步后面的都是废话了回答质量明显的差但是思维链还算清晰能看出来这是一个线性方程组问题能够意识到把问题拆解成确定灯的状态和熄灭所有灯两个部分效果还可以代码方面的测试也做了些测试算法测试是最小生成树脚本测试是自动解密凯撒密码评价是能用再看一眼显存嗯一用就跑满了但是生成速度很流畅说明还有往上升模型的空间再加上晚上看到群友有说可以把和模型部署在盘于是乎打算换个对于命令行一窍不通喵五切换盘下载体验下载路径强切换然后下一个期间被误导试了下哈哈看这占用就很刺激你的显存占用怎么是尖尖的六不敢锐评小谈几句本地部署有什么必要性吗我不是技术大神但从一个泛领域的大一学生的角度来说对当下计算机学科学生的影响是颠覆性的年发布那会所有人都震惊了当时还是高二毛头小子不懂一点但看的文本处理能力真的是叹为观止换到后面系再到国产文心通义豆包不说对于泛整个领域的打击单纯说我大一的学习体验他都能给我千疮百孔的代码了那他自己写不比我好吗等我学习到能写出和他一样好的他又进化到哪一步了对于泛领域的不可替代性真的有吗我本身不太懂不懂炼丹但是这波新闻营销还是大大的宣传了的训练量训练的首次使用打破显卡垄断这些对我而言影响没那么大顶多成为中国人大喊或者北邮学生一波心理上的影响向来不能量化我也不好说了我看到的是超绝的联网搜索信息整合推理尤其这个推理有时候相比结果我们确实更加需要过程当然现在问题是过程偶尔繁琐些不过已经足够给一个学生足够的了我还是觉得不去考虑什么的可不可替代性了罢反正他是个好老师就对了吃不吃得上饭还是以后的事情',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-02-06 00:14:16',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><script src="https://cdn.jsdelivr.net/npm/sakana-widget"></script><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" integrity="sha256-TThEtR+XalhWKkfF383YLOrI50NGNeIqrzS+q08afrY=" crossorigin="anonymous"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="https://ooo.0x0.ooo/2025/01/26/OGyfUN.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><div class="back-home-button"><i class="anzhiyufont anzhiyu-icon-grip-vertical"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://tanpinsary.github.io/" title="博客"><img class="back-menu-item-icon" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div></div></div><a id="site-name" href="/" accesskey="h"><div class="title">arctanp</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a><div id="he-plugin-simple"></div><script>var WIDGET = {
+  "CONFIG": {
+    "modules": "0124",
+    "background": "2",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "16",
+    "cityColor": "FFFFFF",
+    "citySize": "16",
+    "aqiColor": "E8D87B",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "borderRadius": "20",
+    "fixed": "true",
+    "vertical": "top",
+    "horizontal": "left",
+    "left": "20",
+    "top": "7.1",
+    "key": "df245676fb434a0691ead1c63341cd94"
+  }
+}
+</script><link rel="stylesheet" href="https://widget.qweather.net/simple/static/css/he-simple.css?v=1.4.0"/><script src="https://widget.qweather.net/simple/static/js/he-simple.js?v=1.4.0"></script></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-link"></use></svg><span> 友人帐</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/comments/"><i class="anzhiyufont anzhiyu-icon-envelope faa-tada" style="font-size: 0.9em;"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/music/"><i class="anzhiyufont anzhiyu-icon-music faa-tada" style="font-size: 0.9em;"></i><span> 音乐馆</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/bangumis/"><i class="anzhiyufont anzhiyu-icon-bilibili faa-tada" style="font-size: 0.9em;"></i><span> 追番页</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button only-home" id="travellings_button" title="随机前往一个开往项目网站"><a class="site-page" onclick="anzhiyu.totraveling()" title="随机前往一个开往项目网站" href="javascript:void(0);" rel="external nofollow" data-pjax-state="external"><i class="anzhiyufont anzhiyu-icon-train"></i></a></div><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> 最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/acm/" style="font-size: 1.05rem;">acm<sup>1</sup></a><a href="/tags/deepseek-r1/" style="font-size: 1.05rem;">deepseek-r1<sup>1</sup></a><a href="/tags/insights/" style="font-size: 1.05rem;">insights<sup>2</sup></a><a href="/tags/llm/" style="font-size: 1.05rem;">llm<sup>1</sup></a><a href="/tags/markdown/" style="font-size: 1.05rem;">markdown<sup>1</sup></a><a href="/tags/%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 1.05rem;">复习笔记<sup>3</sup></a><a href="/tags/%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B0/" style="font-size: 1.05rem;">实践笔记<sup>1</sup></a><a href="/tags/%E6%95%B0%E5%AD%A6/" style="font-size: 1.05rem;">数学<sup>2</sup></a><a href="/tags/%E6%95%B0%E5%AD%A6%E5%88%86%E6%9E%90/" style="font-size: 1.05rem;">数学分析<sup>1</sup></a><a href="/tags/%E6%B5%8B%E8%AF%95/" style="font-size: 1.05rem;">测试<sup>1</sup></a><a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 1.05rem;">算法<sup>1</sup></a><a href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" style="font-size: 1.05rem;">线性代数<sup>1</sup></a><a href="/tags/%E8%AF%AD%E6%B3%95/" style="font-size: 1.05rem;">语法<sup>1</sup></a><a href="/tags/%E9%80%9A%E4%BF%A1%E6%A6%82%E8%AE%BA/" style="font-size: 1.05rem;">通信概论<sup>1</sup></a><a href="/tags/%E9%9A%8F%E7%AC%94/" style="font-size: 1.05rem;">随笔<sup>1</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/02/"><span class="card-archive-list-date">二月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/01/"><span class="card-archive-list-date">一月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">6</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/12/"><span class="card-archive-list-date">十二月 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url">笔记</a><i class="anzhiyufont anzhiyu-icon-angle-right post-meta-separator"></i><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AC%94%E8%AE%B0/ai/" itemprop="url">ai</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/llm/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>llm</span></a><a class="article-meta__tags" href="/tags/deepseek-r1/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>deepseek-r1</span></a><a class="article-meta__tags" href="/tags/%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B0/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>实践笔记</span></a></span></div></div><h1 class="post-title" itemprop="name headline">本地部署deepseek-r1模型 评价——玩具 or not?</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2025-02-05T13:00:35.000Z" title="发表于 2025-02-05 21:00:35">2025-02-05</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2025-02-05T16:14:16.417Z" title="更新于 2025-02-06 00:14:16">2025-02-06</time></span></div><div class="meta-secondline"><span class="post-meta-separator"></span><span class="post-meta-wordcount"><i class="anzhiyufont anzhiyu-icon-file-word post-meta-icon" title="文章字数"></i><span class="post-meta-label" title="文章字数">字数总计:</span><span class="word-count" title="文章字数">4.7k</span><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-clock post-meta-icon" title="阅读时长"></i><span class="post-meta-label" title="阅读时长">阅读时长:</span><span>14分钟</span></span><span class="post-meta-separator"></span><span class="post-meta-pv-cv" id="" data-flag-title="本地部署deepseek-r1模型 评价——玩具 or not?"><i class="anzhiyufont anzhiyu-icon-fw-eye post-meta-icon"></i><span class="post-meta-label" title="阅读量">阅读量:</span><span id="busuanzi_value_page_pv"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-spin"></i></span></span><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为北京"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>北京</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src=""></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="http://example.com/2025/02/05/%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2deepseek-r1%E6%A8%A1%E5%9E%8B%20%E8%AF%84%E4%BB%B7%E2%80%94%E2%80%94%E7%8E%A9%E5%85%B7%20or%20not/"><header><a class="post-meta-categories" href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url">笔记</a><a class="post-meta-categories" href="/categories/%E7%AC%94%E8%AE%B0/ai/" itemprop="url">ai</a><a href="/tags/llm/" tabindex="-1" itemprop="url">llm</a><a href="/tags/deepseek-r1/" tabindex="-1" itemprop="url">deepseek-r1</a><a href="/tags/%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B0/" tabindex="-1" itemprop="url">实践笔记</a><h1 id="CrawlerTitle" itemprop="name headline">本地部署deepseek-r1模型 评价——玩具 or not?</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">Tanpinsary</span><time itemprop="dateCreated datePublished" datetime="2025-02-05T13:00:35.000Z" title="发表于 2025-02-05 21:00:35">2025-02-05</time><time itemprop="dateCreated datePublished" datetime="2025-02-05T16:14:16.417Z" title="更新于 2025-02-06 00:14:16">2025-02-06</time></header><blockquote>
+<p>第一次试手deepseek那会正好出r1，用了几下觉得信息检索能力极强，后面ds舆论炒起来开始暴增闹钟自信心那会正好做哈佬的解密末班车，利用r1找到了大量的思路，写的py脚本几乎不用debug直接能用。（虽然但是，解密做了3个开摆了，剩下俩都有不成熟的思路硬做也说不定呢<br>然后ds被大范围ddos服务器繁忙，思考水平下降，当时由于deepseek完全开源就想着本地部署一个玩玩，一直拖到了年后，部署了个7b玩玩，感觉有点玩具了……</p>
+</blockquote>
+<h2 id="一-安装Ollama"><a href="#一-安装Ollama" class="headerlink" title="一  安装Ollama"></a>一  安装Ollama</h2><p>Ollama三端都有，直接官网download即可<br>（当晚网极差，挂着代理下了一整晚</p>
+<p><a target="_blank" rel="noopener" href="https://ollama.com/">Ollama官网</a> </p>
+<p>下载后管理员打开，貌似只能下载在c盘，不能修改下载路径</p>
+<h2 id="二-选择你想要的模型下载"><a href="#二-选择你想要的模型下载" class="headerlink" title="二 选择你想要的模型下载"></a>二 选择你想要的模型下载</h2><p>deepseek本地部署模型提供了不同大小训练量的，如1.5b、7b、8b、14b、32b、70b或671b，各个配置依照gpu 显存等酌情配置</p>
+<p>我的电脑是RTX4060Laptop，显存8G（在昨晚之前一直以为是16G……），加上c盘也不是多干净，所以开始选择下载了最主流的7b</p>
+<p>下面是官网的参考版本语空间配置</p>
+<p>版本：1.5b，适用于一般文字编辑使用（需要1.1GB空余空间）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ollama run deepseek-r1:1.5b</span><br></pre></td></tr></table></figure>
+
+<p>版本：7b，DeepSeek的第一代推理模型，性能与OpenAl-01相当，包括从基于Llama和Qwen的DeepSeek-R1中提取的六个密集模型（需要4.7GB空余空间）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ollama run deepseek-r1:7b</span><br></pre></td></tr></table></figure>
+
+<p>版本：8b，（需要4.9GB空余空间）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ollama run deepseek-r1:8b</span><br></pre></td></tr></table></figure>
+
+<p>版本：14b，（需要9GB空余空间）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ollama run deepseek-r1:14b</span><br></pre></td></tr></table></figure>
+
+<p>版本：32b，（需要20GB空余空间）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ollama run deepseek-r1:32b</span><br></pre></td></tr></table></figure>
+
+<p>版本：70b，（需要43GB空余空间）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ollama run deepseek-r1:70b</span><br></pre></td></tr></table></figure>
+
+<p>版本：671b，（需要404GB空余空间）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ollama run deepseek-r1:671b</span><br></pre></td></tr></table></figure>
+
+
+
+<p>![a8de952b32cae4694a8e937ae02014dd](C:\Users\tanpi\Documents\Tencent Files\1925352047\nt_qq\nt_data\Pic\2025-02\Ori\a8de952b32cae4694a8e937ae02014dd.jpg)</p>
+<p>(图片来自网络)</p>
+<p>在cmd输入<code>ollma run deepseek-r1:7b</code>即可下载</p>
+<p>完成后cmd对话框弹出success，并以会以 <code>&gt;&gt;&gt;</code> 为开头，此处表示可以正常使用</p>
+<h2 id="三-使用"><a href="#三-使用" class="headerlink" title="三 使用"></a>三 使用</h2><p>查看已安装的模型列表</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ollama list</span><br></pre></td></tr></table></figure>
+
+<p>使用某模型</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ollama run [模型名]</span><br></pre></td></tr></table></figure>
+
+<p>结束对话</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bye</span><br></pre></td></tr></table></figure>
+
+<h2 id="四-实测"><a href="#四-实测" class="headerlink" title="四 实测"></a>四 实测</h2><p>按理说这玩意非常吃显存，但我当时挂着模拟器打fgo，形势下问了几个信息检索类问题</p>
+<p>![24c0a82ba8844b85903294dae96219bc](C:\Users\tanpi\Documents\Tencent Files\1925352047\nt_qq\nt_data\Pic\2025-02\Ori\24c0a82ba8844b85903294dae96219bc.png)</p>
+<p>![41bcc26b5d478a49632f38324b2fb714](C:\Users\tanpi\Documents\Tencent Files\1925352047\nt_qq\nt_data\Pic\2025-02\Ori\41bcc26b5d478a49632f38324b2fb714.png)</p>
+<p>没截全，但是可见一斑足够的弱智。。。</p>
+<p>晚上这会把进程关了关，再来试试</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="C:\Users\tanpi\AppData\Roaming\Typora\typora-user-images\image-20250205213604824.png" alt="image-20250205213604824"></p>
+<p>看不下去一点，纯纯胡编乱造，东扯西扯扯得没边了都</p>
+<p>就在我脑子里重复着**“好吧，这就是个玩具，我放弃了”**的想法的时候，我突然反应过来本地部署不联网，训练库没月姬肯定不会给出正确的结果 呃呃，那我们换一个例子</p>
+<p>就拿哈佬那道lightsout测试吧</p>
+<p>先贴一个在ds被ddos前他给的答案</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; 我现在要解决lightsout游戏的加强版。在一个 6×6的棋盘中，有些灯是开着的，有些灯是关着的（就像普通的 LightsOut 游戏那</span><br><span class="line">... 样）。</span><br><span class="line">...</span><br><span class="line">... 但是，你不知道哪些灯是开着的，哪些灯是关着的。每次你进行操作后，游戏只会告诉你「现在还有几盏灯亮着」。</span><br><span class="line">...</span><br><span class="line">... 你需要把所有灯都灭掉，才能通关。</span><br><span class="line">... 请给出你能想到的所有游戏策略，包括但不限于：</span><br><span class="line">... 如何找到哪些灯是开的，哪些灯是关的</span><br><span class="line">... 如何在已知所有开的灯的位置后找到一个路径把所有灯关掉</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">think</span>&gt;</span></span>思考时间147s，略</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">think</span>&gt;</span></span>要解决6×6 LightsOut加强版问题，以下是分阶段的策略：</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section">### <span class="strong">**一、探测初始亮灯状态**</span></span></span><br><span class="line"></span><br><span class="line"><span class="section">#### <span class="strong">**策略1：单个灯翻转探测法**</span></span></span><br><span class="line"><span class="bullet">1.</span> <span class="strong">**原理**</span>：每个灯可通过特定按钮组合单独翻转。按压该组合后，亮灯数的变化（±1）揭示其初始状态。</span><br><span class="line"><span class="bullet">2.</span> <span class="strong">**步骤**</span>：</span><br><span class="line"><span class="bullet">   -</span> <span class="strong">**预计算**</span>：对每个灯（i,j），找到一组按钮组合S<span class="emphasis">_ij，使其仅翻转该灯（需借助线性代数或已知模式）。</span></span><br><span class="line"><span class="emphasis">   - <span class="strong">**逐灯测试**</span>：</span></span><br><span class="line"><span class="emphasis">     1. 初始亮灯数为N。</span></span><br><span class="line"><span class="emphasis">     2. 按压S_</span>ij对应的按钮，记录新亮灯数M。</span><br><span class="line"><span class="bullet">     3.</span> Δ = M - N：</span><br><span class="line"><span class="bullet">        -</span> Δ = -1 → 灯（i,j）初始亮。</span><br><span class="line"><span class="bullet">        -</span> Δ = +1 → 灯（i,j）初始灭。</span><br><span class="line"><span class="bullet">   -</span> <span class="strong">**重复**</span>所有36个灯，得到完整初始状态。</span><br><span class="line"></span><br><span class="line"><span class="section">#### <span class="strong">**策略2：系统按压法**</span></span></span><br><span class="line"><span class="bullet">1.</span> <span class="strong">**原理**</span>：每次按钮按压的亮灯数变化Δ与影响区域的初始状态相关。</span><br><span class="line"><span class="bullet">2.</span> <span class="strong">**步骤**</span>：</span><br><span class="line"><span class="bullet">   -</span> 依次按压每个按钮，记录Δ<span class="emphasis">_i = 5 - 2a_</span>i（a<span class="emphasis">_i为初始时该按钮影响区域的亮灯数）。</span></span><br><span class="line"><span class="emphasis">   - 建立方程组，考虑按钮影响的交叠，解出初始状态。</span></span><br><span class="line"><span class="emphasis">   - <span class="strong">**缺点**</span>：需解复杂方程，适合编程处理。</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">---</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">### <span class="strong">**二、关闭所有亮灯的已知解法**</span></span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">#### <span class="strong">**传统逐行消除法**</span></span></span><br><span class="line"><span class="emphasis">1. <span class="strong">**原理**</span>：逐行关闭亮灯，利用下一行的按钮消除当前行的残留。</span></span><br><span class="line"><span class="emphasis">2. <span class="strong">**步骤**</span>：</span></span><br><span class="line"><span class="emphasis">   - <span class="strong">**第1-5行**</span>：</span></span><br><span class="line"><span class="emphasis">     1. 对当前行，若某灯亮，按下其正下方的按钮（下一行同列）以关闭。</span></span><br><span class="line"><span class="emphasis">     2. 重复直至当前行全灭。</span></span><br><span class="line"><span class="emphasis">   - <span class="strong">**第6行**</span>：通过特定组合（如按钮模式）消除剩余亮灯。</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">#### <span class="strong">**矩阵求逆法**</span></span></span><br><span class="line"><span class="emphasis">1. <span class="strong">**原理**</span>：将问题建模为模2线性方程组 <span class="strong">**Ax = b**</span>（A为按钮影响矩阵，b为初始状态）。</span></span><br><span class="line"><span class="emphasis">2. <span class="strong">**步骤**</span>：</span></span><br><span class="line"><span class="emphasis">   - 求解方程得按钮组合x，按压这些按钮即可关闭所有灯。</span></span><br><span class="line"><span class="emphasis">   - <span class="strong">**适用工具**</span>：编程工具（如高斯消元）或查表已知解。</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">---</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">### <span class="strong">**三、其他辅助策略**</span></span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">#### <span class="strong">**奇偶性跟踪**</span></span></span><br><span class="line"><span class="emphasis">- 每次按压按钮后，亮灯数奇偶性翻转。利用此特性减少可能的状态组合。</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">#### <span class="strong">**重置测试**</span></span></span><br><span class="line"><span class="emphasis">- 按压同一按钮两次可恢复原状态，用于校准或对比亮灯数。</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">---</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">### <span class="strong">**总结**</span></span></span><br><span class="line"><span class="emphasis">1. <span class="strong">**探测阶段**</span>：优先使用<span class="strong">**单个灯翻转法**</span>（需预计算组合）或<span class="strong">**系统按压法**</span>确定初始状态。</span></span><br><span class="line"><span class="emphasis">2. <span class="strong">**关闭阶段**</span>：应用<span class="strong">**逐行消除**</span>或<span class="strong">**矩阵求逆法**</span>找到按钮组合。</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">此策略结合数学建模与系统操作，可在有限反馈下高效通关。</span></span><br></pre></td></tr></table></figure>
+
+<p>下面这个7b本地跑的</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; 我现在要解决lightsout游戏的加强版。在一个 6×6的棋盘中，有些灯是开着的，有些灯是关着的（就像普通的 LightsOut 游戏那</span><br><span class="line">... 样）。</span><br><span class="line">...</span><br><span class="line">... 但是，你不知道哪些灯是开着的，哪些灯是关着的。每次你进行操作后，游戏只会告诉你「现在还有几盏灯亮着」。</span><br><span class="line">...</span><br><span class="line">... 你需要把所有灯都灭掉，才能通关。</span><br><span class="line">... 请给出你能想到的所有游戏策略，包括但不限于：</span><br><span class="line">... 如何找到哪些灯是开的，哪些灯是关的</span><br><span class="line">... 如何在已知所有开的灯的位置后找到一个路径把所有灯关掉</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">think</span>&gt;</span></span></span><br><span class="line">好的，我现在要解决 strengthened Lights Out 游戏。这是一个 6×6 的棋盘，有些灯开着，有些关着。我并不知道哪些灯开着，</span><br><span class="line">每次操作后只会告诉我现在还有多少盏灯亮着。目标是将所有的灯都熄灭才能通关。</span><br><span class="line"></span><br><span class="line">首先，我需要理解基本的 Lights Out 游戏规则。通常情况下，每次按下一个灯会切换该灯以及其相邻四个方向（上、下、左、右）</span><br><span class="line">的状态：开变关，关变开。在 strengthened 版本中，情况不同，因为我不知道哪些灯是开着的，所以无法直接识别目标。</span><br><span class="line"></span><br><span class="line">我的第一步是确定棋盘上的哪几盏灯是开着的。由于我不知道任何信息，这一步可能需要一些随机尝试或者系统性的方法来识别开灯</span><br><span class="line">的位置。</span><br><span class="line"></span><br><span class="line">我可能会开始随机按下棋盘上的灯，记录每次操作后亮着的灯的数量。如果某个操作后亮灯数量减少，说明我按下了一个或多个开灯</span><br><span class="line">，否则可能是无关的灯被切换状态。这可能是一个繁琐的过程，因为需要多次尝试才能找到足够的线索来确定哪些灯是开的。</span><br><span class="line"></span><br><span class="line">一旦我大致确定了哪些灯是开着的，下一步就是如何有效地将它们全部熄灭。这类似于在已知目标的情况下解决 Lights Out 游戏的</span><br><span class="line">问题。通常，解决 Lights Out 游戏的方法涉及设置一个线性方程组，每个方程对应一行或一列的灯状态变化。</span><br><span class="line"></span><br><span class="line">具体来说，我可以为每行建立一个方程，表示该行需要通过哪些操作来熄灭所有灯。例如，如果一行有6个灯，我可以通过按压这些</span><br><span class="line">灯中的某些组合来达到关灯的目标。由于 Lights Out 游戏遵循模 2 的数学特性（即灯的状态是二进制的），可以利用线性代数的</span><br><span class="line">方法来解决。</span><br><span class="line"></span><br><span class="line">然而，在 strengthened 版本中，因为我知道哪些灯是开着的，我可以将问题简化为一个确定性的方程组求解问题。每按下一次灯相</span><br><span class="line">当于对相关的行和列进行一次操作，最终需要找到一组按压操作使得所有开灯都被切换到关的位置。</span><br><span class="line"></span><br><span class="line">这可能涉及编程或使用矩阵运算来解决，但这对于手动解决 6×6 的棋盘来说可能会过于复杂。因此，我可能需要寻找一种更直观的</span><br><span class="line">方法，通过逐步消除可能性来找到正确的操作序列。</span><br><span class="line"></span><br><span class="line">此外，我还需要考虑每次操作对其他灯的影响。按压一个灯不仅会影响该灯本身，还会影响周围的灯。这意味着操作之间的相互影响</span><br><span class="line">必须被仔细计算和处理，以确保最终所有灯都被熄灭。</span><br><span class="line"></span><br><span class="line">总的来说，我的策略可能包括以下几个步骤：</span><br><span class="line"><span class="bullet">1.</span> 随机按下棋盘上的多个灯，记录每次操作后亮灯数量的变化。</span><br><span class="line"><span class="bullet">2.</span> 根据这些数据推断哪些灯是开着的。</span><br><span class="line"><span class="bullet">3.</span> 使用线性代数的方法或逐步消除法来确定将所有开灯熄灭的操作序列。</span><br><span class="line"></span><br><span class="line">这可能是一个漫长而复杂的过程，但通过系统性和耐心的尝试，我相信最终能够找到解决 strengthened Lights Out 游戏的策略。</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">think</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="section">### 策略说明：</span></span><br><span class="line"></span><br><span class="line"><span class="section">#### 第一步：识别开着的灯</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span> <span class="strong">**随机按下灯**</span>：</span><br><span class="line"><span class="bullet">   -</span> 从棋盘上的任意位置开始，依次按下多个不同的灯。每次按下后记录当前亮着的灯的数量。</span><br><span class="line"></span><br><span class="line"><span class="bullet">2.</span> <span class="strong">**分析数据**</span>：</span><br><span class="line"><span class="bullet">   -</span> 比较每次操作后的亮灯数量与初始状态（全灭）的差异。</span><br><span class="line"><span class="bullet">   -</span> 如果某个操作导致亮灯数量减少，说明按压了至少一个开着的灯；否则，该操作可能无关或与其他因素相关。</span><br><span class="line"></span><br><span class="line"><span class="bullet">3.</span> <span class="strong">**逐步确定开灯位置**</span>：</span><br><span class="line"><span class="bullet">   -</span> 通过多次尝试和比较，可以逐渐确定哪些特定位置的灯是开着的。</span><br><span class="line"><span class="bullet">   -</span> 注意到每次按下灯可能导致多个相邻灯状态变化，因此需要考虑连锁反应的影响。</span><br><span class="line"></span><br><span class="line"><span class="section">#### 第二步：解密开灯布局</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span> <span class="strong">**建立方程组**</span>：</span><br><span class="line"><span class="bullet">   -</span> 将每个开灯视为一个变量，按压操作作为方程中的系数，最终目标是求解所有变量（即哪些灯需要被按压）以达到全灭状态。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="bullet">2.</span> <span class="strong">**使用线性代数方法**</span>：</span><br><span class="line"><span class="bullet">   -</span> 由于 Lights Out 游戏遵循模 2 运算，可以将问题转化为二元一次方程组。</span><br><span class="line"><span class="bullet">   -</span> 每个方程对应一行或一列的灯状态变化，变量表示是否需要按压该位置的灯。</span><br><span class="line"></span><br><span class="line"><span class="bullet">3.</span> <span class="strong">**求解方程**</span>：</span><br><span class="line"><span class="bullet">   -</span> 利用矩阵运算或高斯消元法在模 2 的环境下求解方程组，得到所有需按压的操作序列。</span><br><span class="line"></span><br><span class="line"><span class="section">#### 第三步：执行操作</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span> <span class="strong">**确定操作顺序**</span>：</span><br><span class="line"><span class="bullet">   -</span> 根据解得的方程组，确定具体的灯需要被按压。</span><br><span class="line"><span class="bullet">   -</span> 考虑操作的连锁效应，选择操作顺序以简化后续步骤。</span><br><span class="line"></span><br><span class="line"><span class="bullet">2.</span> <span class="strong">**逐步应用操作**</span>：</span><br><span class="line"><span class="bullet">   -</span> 按照预设的操作序列依次按下灯，观察棋盘状态变化。</span><br><span class="line"><span class="bullet">   -</span> 如果在某一步骤后无法达到预期效果，可能需要调整之前的决策或重新解方程组。</span><br><span class="line"></span><br><span class="line"><span class="section">#### 第四步：优化与验证</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span> <span class="strong">**反复测试和验证**</span>：</span><br><span class="line"><span class="bullet">   -</span> 通过多次实验验证解得的操作序列是否可靠，确保每次操作都能按预期改变灯的状态。</span><br><span class="line"><span class="bullet">   -</span> 注意棋盘的对称性和循环性，寻找更高效的操作路径。</span><br><span class="line"></span><br><span class="line"><span class="bullet">2.</span> <span class="strong">**简化策略**</span>：</span><br><span class="line"><span class="bullet">   -</span> 寻找重复或相似的操作模式，减少不必要的按下次数。</span><br><span class="line"><span class="bullet">   -</span> 利用已知的开灯布局进行针对性的操作，加快熄灯速度。</span><br><span class="line"></span><br><span class="line"><span class="section">#### 第五步：全局调整与适应</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span> <span class="strong">**考虑棋盘全局状态**</span>：</span><br><span class="line"><span class="bullet">   -</span> 在解密过程中，保持对棋盘整体状态的关注，避免孤立操作，影响全局效果。</span><br><span class="line"></span><br><span class="line"><span class="bullet">2.</span> <span class="strong">**灵活应对变化**</span>：</span><br><span class="line"><span class="bullet">   -</span> 面对某些复杂情况，可能需要临时调整策略或重新评估方程组的正确性。</span><br><span class="line"><span class="bullet">   -</span> 灵活性是解决复杂 Lights Out 游戏的关键。</span><br><span class="line"></span><br><span class="line"><span class="section">#### 第六步：总结与提升</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span> <span class="strong">**记录成功案例**</span>：</span><br><span class="line"><span class="bullet">   -</span> 完成一次成功的熄灯后，详细记录操作过程和思考步骤。</span><br><span class="line"><span class="bullet">   -</span> 分析为什么该策略有效，为后续改进提供参考。</span><br><span class="line"></span><br><span class="line"><span class="bullet">2.</span> <span class="strong">**持续练习与改进**</span>：</span><br><span class="line"><span class="bullet">   -</span> 不断尝试新的策略和方法，寻找更高效或更具适应性的解决方案。</span><br><span class="line"><span class="bullet">   -</span> 通过不断练习提升对棋盘状态的敏感度和预测能力。</span><br><span class="line"></span><br><span class="line"><span class="section">#### 第七步：使用辅助工具（可选）</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span> <span class="strong">**编程求解方程组**</span>：</span><br><span class="line"><span class="bullet">   -</span> 使用编程语言（如 Python）编写程序来自动求解方程组，减少人工计算误差。</span><br><span class="line"><span class="bullet">   -</span> 适用于更大的棋盘或更复杂的布局情况。</span><br><span class="line"></span><br><span class="line"><span class="bullet">2.</span> <span class="strong">**模拟器练习**</span>：</span><br><span class="line"><span class="bullet">   -</span> 利用 Lights Out 游戏模拟器进行练习和测试，快速验证策略的有效性。</span><br><span class="line"><span class="bullet">   -</span> 这种工具可以帮助更好地理解每个操作的影响，并优化解题方法。</span><br><span class="line"></span><br><span class="line"><span class="section">#### 第八步：总结经验</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span> <span class="strong">**反思解题过程**</span>：</span><br><span class="line"><span class="bullet">   -</span> 分析整个解题过程中可能遇到的困难和解决办法。</span><br><span class="line"><span class="bullet">   -</span> 总结成功因素和失误教训，为未来的策略调整提供依据。</span><br><span class="line"></span><br><span class="line"><span class="bullet">2.</span> <span class="strong">**制定长期计划**</span>：</span><br><span class="line"><span class="bullet">   -</span> 根据当前的学习进度和目标，制定后续的学习和练习计划。</span><br><span class="line"><span class="bullet">   -</span> 目标是掌握多种 Lights Out 游戏的解法，并能够在不同复杂度下灵活应对。</span><br><span class="line"></span><br><span class="line"><span class="section">#### 第九步：挑战更高的难度</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span> <span class="strong">**增加游戏难度**</span>：</span><br><span class="line"><span class="bullet">   -</span> 尝试增加游戏难度，如更大规模的棋盘或更高阶的操作规则。</span><br><span class="line"><span class="bullet">   -</span> 通过解决更复杂的谜题提升综合能力。</span><br><span class="line"></span><br><span class="line"><span class="bullet">2.</span> <span class="strong">**参加比赛或竞赛**</span>：</span><br><span class="line"><span class="bullet">   -</span> 如果有机会，参与 Lights Out 游戏的比赛或竞赛，与其他玩家交流和切磋。</span><br><span class="line"><span class="bullet">   -</span> 这是提高水平、巩固策略的有效途径。</span><br><span class="line"></span><br><span class="line"><span class="section">#### 第十步：保持耐心与坚持</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span> <span class="strong">**克服耐心限制**</span>：</span><br><span class="line"><span class="bullet">   -</span> 面对复杂的谜题时，保持冷静和耐心，避免因一次失败而气馁。</span><br><span class="line"><span class="bullet">   -</span> 认识到解题过程中的每一次尝试都是积累经验和提升能力的机会。</span><br><span class="line"></span><br><span class="line"><span class="bullet">2.</span> <span class="strong">**保持积极心态**</span>：</span><br><span class="line"><span class="bullet">   -</span> 以积极的心态面对挑战，相信通过不断的学习和实践，一定能够掌握 Lights Out 游戏的精髓。</span><br></pre></td></tr></table></figure>
+
+<p>本地模型第八步后面的都是废话了，回答质量明显的差，但是思维链还算清晰，能看出来这是一个线性方程组问题，能够意识到把问题拆解成 确定灯的状态 和 熄灭所有灯 两个部分，效果……还可以</p>
+<p>代码方面的测试也做了些测试，算法测试是最小生成树，脚本测试是自动解密凯撒密码，评价是能用</p>
+<p>再看一眼显存</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="C:\Users\tanpi\AppData\Roaming\Typora\typora-user-images\image-20250205221220007.png" alt="image-20250205221220007"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="C:\Users\tanpi\AppData\Roaming\Typora\typora-user-images\image-20250205221353192.png" alt="image-20250205221353192"></p>
+<p>嗯，一用就跑满了，但是生成速度很流畅，说明还有往上升模型的空间</p>
+<p>再加上晚上看到群友有说可以把ollama和模型部署在d盘，于是乎打算换个8b</p>
+<p>（对于命令行一窍不通喵</p>
+<h2 id="五-Deepseek-r1-8b切换D盘下载体验"><a href="#五-Deepseek-r1-8b切换D盘下载体验" class="headerlink" title="五 Deepseek-r1:8b切换D盘下载体验"></a>五 Deepseek-r1:8b切换D盘下载体验</h2><p>下载路径强切换</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\OllamaSetup.exe /DIR=D:\Ollama</span><br></pre></td></tr></table></figure>
+
+<p>然后下一个8b</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ollama run deepseek-r1:8b</span><br></pre></td></tr></table></figure>
+
+<p>（期间被fake news误导试了下32b，哈哈，看这gpu占用就很刺激</p>
+<p>![c4fa81e2aa63e3204dcc24cbb1f6e687](C:\Users\tanpi\Documents\Tencent Files\1925352047\nt_qq\nt_data\Pic\2025-02\Ori\c4fa81e2aa63e3204dcc24cbb1f6e687.png)</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="C:\Users\tanpi\AppData\Roaming\Typora\typora-user-images\image-20250206000053870.png" alt="image-20250206000053870"></p>
+<p>（你的显存占用怎么是尖尖的）</p>
+<h2 id="六-不敢锐评，小谈几句"><a href="#六-不敢锐评，小谈几句" class="headerlink" title="六  不敢锐评，小谈几句"></a>六  不敢锐评，小谈几句</h2><p>本地部署有什么必要性吗？</p>
+<p>我不是技术大神，但从一个泛cs领域的大一学生的角度来说，ai对当下计算机学科学生的影响是颠覆性的。22年gpt3发布那会所有人都震惊了，当时还是高二毛头小子不懂一点cs，但看gpt3的文本处理能力真的是叹为观止。换到后面GPT系3.5，4，4o，再到国产ai文心，通义，kimi，豆包……不说llm对于泛cs整个领域的打击，单纯说我大一的学习体验，他都能给我千疮百孔的代码debug了，那他自己写不比我好吗？等我学习到能写出和他一样好的，他又进化到哪一步了？ai对于泛cs领域的不可替代性……真的有……吗？</p>
+<p>我本身不太懂llm不懂炼丹，但是这波新闻营销还是大大的宣传了deepseek的训练量，rl训练的首次使用，打破显卡垄断……这些对我而言影响没那么大，顶多成为中国人大喊win！或者北邮学生win！一波，心理上的影响向来不能量化我也不好说了。</p>
+<p>我看到的是超绝的<strong>联网搜索</strong>，<strong>信息整合</strong>，<strong>推理</strong>，尤其这个推理，有时候相比结果我们确实更加需要过程。当然现在问题是过程偶尔繁琐些，不过已经足够给一个学生足够的insights了</p>
+<p>我还是觉得不去考虑什么ai的可不可替代性了罢……反正他是个好老师就对了，吃不吃得上饭还是以后的事情。</p>
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://ooo.0x0.ooo/2025/01/26/OGyfUN.jpg" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://ooo.0x0.ooo/2025/01/26/OGyfUN.jpg" title="头像" alt="头像"></a><div class="post-copyright__author_name">Tanpinsary</div><div class="post-copyright__author_desc">tanps blog</div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="http://example.com/2025/02/05/%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2deepseek-r1%E6%A8%A1%E5%9E%8B%20%E8%AF%84%E4%BB%B7%E2%80%94%E2%80%94%E7%8E%A9%E5%85%B7%20or%20not/">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('http://example.com/2025/02/05/本地部署deepseek-r1模型 评价——玩具 or not/')">本地部署deepseek-r1模型 评价——玩具 or not?</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="http://example.com/2025/02/05/%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2deepseek-r1%E6%A8%A1%E5%9E%8B%20%E8%AF%84%E4%BB%B7%E2%80%94%E2%80%94%E7%8E%A9%E5%85%B7%20or%20not/"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=本地部署deepseek-r1模型 评价——玩具 or not?&amp;url=http://example.com/2025/02/05/%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2deepseek-r1%E6%A8%A1%E5%9E%8B%20%E8%AF%84%E4%BB%B7%E2%80%94%E2%80%94%E7%8E%A9%E5%85%B7%20or%20not/&amp;pic=" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><script>function copyCurrentPageUrl() {
+  var currentPageUrl = window.location.href;
+  var input = document.createElement("input");
+  input.setAttribute("value", currentPageUrl);
+  document.body.appendChild(input);
+  input.select();
+  input.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  document.body.removeChild(input);
+}</script><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="copyCurrentPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">arctanp</a>！</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/llm/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>llm<span class="tagsPageCount">1</span></a><a class="post-meta__box__tags" href="/tags/deepseek-r1/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>deepseek-r1<span class="tagsPageCount">1</span></a><a class="post-meta__box__tags" href="/tags/%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B0/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>实践笔记<span class="tagsPageCount">1</span></a></div></div></div><div class="post_share"><div class="social-share" data-image="https://ooo.0x0.ooo/2025/01/26/OGyfUN.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"/><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer="defer"></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/2025/01/25/%E6%9D%AD%E7%94%B5acm%E5%85%A5%E9%97%A8/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">杭电acm入门</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()"></div><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://ooo.0x0.ooo/2025/01/26/OGyfUN.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-status"><img class="g-status" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://ooo.0x0.ooo/2025/01/26/OGyfUN.jpg" alt="status"/></div></div><div class="author-info__description">摸了# 默认为站点描述</div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/about"><h1 class="author-info__name">Tanpinsary</h1><div class="author-info__desc">tanps blog</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/Tanpinsary" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="https://space.bilibili.com/391553043" target="_blank" title="BiliBili"><i class="anzhiyufont anzhiyu-icon-bilibili"></i></a></div></div></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bullhorn anzhiyu-shake"></i><span>公告</span></div><div class="announcement_content">blog建设ing 半成品</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80-%E5%AE%89%E8%A3%85Ollama"><span class="toc-number">1.</span> <span class="toc-text">一  安装Ollama</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C-%E9%80%89%E6%8B%A9%E4%BD%A0%E6%83%B3%E8%A6%81%E7%9A%84%E6%A8%A1%E5%9E%8B%E4%B8%8B%E8%BD%BD"><span class="toc-number">2.</span> <span class="toc-text">二 选择你想要的模型下载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89-%E4%BD%BF%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">三 使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B-%E5%AE%9E%E6%B5%8B"><span class="toc-number">4.</span> <span class="toc-text">四 实测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94-Deepseek-r1-8b%E5%88%87%E6%8D%A2D%E7%9B%98%E4%B8%8B%E8%BD%BD%E4%BD%93%E9%AA%8C"><span class="toc-number">5.</span> <span class="toc-text">五 Deepseek-r1:8b切换D盘下载体验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD-%E4%B8%8D%E6%95%A2%E9%94%90%E8%AF%84%EF%BC%8C%E5%B0%8F%E8%B0%88%E5%87%A0%E5%8F%A5"><span class="toc-number">6.</span> <span class="toc-text">六  不敢锐评，小谈几句</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>最近发布</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/05/%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2deepseek-r1%E6%A8%A1%E5%9E%8B%20%E8%AF%84%E4%BB%B7%E2%80%94%E2%80%94%E7%8E%A9%E5%85%B7%20or%20not/" title="本地部署deepseek-r1模型 评价——玩具 or not?">本地部署deepseek-r1模型 评价——玩具 or not?</a><time datetime="2025-02-05T13:00:35.000Z" title="发表于 2025-02-05 21:00:35">2025-02-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/25/%E6%9D%AD%E7%94%B5acm%E5%85%A5%E9%97%A8/" title="杭电acm入门">杭电acm入门</a><time datetime="2025-01-25T11:52:07.000Z" title="发表于 2025-01-25 19:52:07">2025-01-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/23/markdown%E8%AF%AD%E6%B3%95%E8%A7%88/" title="markdown test">markdown test</a><time datetime="2025-01-22T16:21:01.000Z" title="发表于 2025-01-23 00:21:01">2025-01-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/22/%EF%BC%88%E8%BD%AC%E8%BD%BD%EF%BC%89%E5%81%9A%E9%A2%98%E5%AE%B6%E7%9A%84%E5%9B%B0%E5%A2%83%E4%B8%8E%E5%87%BA%E8%B7%AF/" title="（转载）做题家的困境与出路">（转载）做题家的困境与出路</a><time datetime="2025-01-22T04:31:57.000Z" title="发表于 2025-01-22 12:31:57">2025-01-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/08/1%E6%9C%887%E6%97%A5%E4%B9%8B%E4%BA%8B/" title="1月7日之事">1月7日之事</a><time datetime="2025-01-07T16:30:37.000Z" title="发表于 2025-01-08 00:30:37">2025-01-08</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="workboard"><img class="workSituationImg boardsign" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.0.4/img/badge/安知鱼-上班摸鱼中.svg" alt="18岁,是学生" title="18岁,是学生"/><div id="runtimeTextTip"></div></div></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2025 By <a class="footer-bar-link" href="/" title="Tanpinsary" target="_blank">Tanpinsary</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">7</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://tanpinsary.github.io/" title="博客"><img class="back-menu-item-icon" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-link"></use></svg><span> 友人帐</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/comments/"><i class="anzhiyufont anzhiyu-icon-envelope faa-tada" style="font-size: 0.9em;"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/music/"><i class="anzhiyufont anzhiyu-icon-music faa-tada" style="font-size: 0.9em;"></i><span> 音乐馆</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/bangumis/"><i class="anzhiyufont anzhiyu-icon-bilibili faa-tada" style="font-size: 0.9em;"></i><span> 追番页</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/acm/" style="font-size: 0.88rem;">acm<sup>1</sup></a><a href="/tags/deepseek-r1/" style="font-size: 0.88rem;">deepseek-r1<sup>1</sup></a><a href="/tags/insights/" style="font-size: 0.88rem;">insights<sup>2</sup></a><a href="/tags/llm/" style="font-size: 0.88rem;">llm<sup>1</sup></a><a href="/tags/markdown/" style="font-size: 0.88rem;">markdown<sup>1</sup></a><a href="/tags/%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 0.88rem;">复习笔记<sup>3</sup></a><a href="/tags/%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B0/" style="font-size: 0.88rem;">实践笔记<sup>1</sup></a><a href="/tags/%E6%95%B0%E5%AD%A6/" style="font-size: 0.88rem;">数学<sup>2</sup></a><a href="/tags/%E6%95%B0%E5%AD%A6%E5%88%86%E6%9E%90/" style="font-size: 0.88rem;">数学分析<sup>1</sup></a><a href="/tags/%E6%B5%8B%E8%AF%95/" style="font-size: 0.88rem;">测试<sup>1</sup></a><a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 0.88rem;">算法<sup>1</sup></a><a href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" style="font-size: 0.88rem;">线性代数<sup>1</sup></a><a href="/tags/%E8%AF%AD%E6%B3%95/" style="font-size: 0.88rem;">语法<sup>1</sup></a><a href="/tags/%E9%80%9A%E4%BF%A1%E6%A6%82%E8%AE%BA/" style="font-size: 0.88rem;">通信概论<sup>1</sup></a><a href="/tags/%E9%9A%8F%E7%AC%94/" style="font-size: 0.88rem;">随笔<sup>1</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@17.8.5/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("01/13/2025 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2025 By 安知鱼 V1.6.14",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 Tanpinsary 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><script async="async">(function () {
+  var grt = new Date("01/13/2025 00:00:00"); //设置网站上线时间
+  var now = new Date();
+  var dnum;
+  var hnum;
+  var mnum;
+  var snum;
+  var nowHour;
+
+  // 计算并更新天数、小时数、分钟数和秒数
+  function updateTime() {
+    now = new Date(); // 更新 now 的值
+    nowHour = now.getHours(); // 更新 nowHour 的值
+    var days = (now - grt) / 1000 / 60 / 60 / 24;
+    dnum = Math.floor(days);
+    var hours = (now - grt) / 1000 / 60 / 60 - 24 * dnum;
+    hnum = Math.floor(hours);
+    if (String(hnum).length == 1) {
+      hnum = "0" + hnum;
+    }
+    var minutes = (now - grt) / 1000 / 60 - 24 * 60 * dnum - 60 * hnum;
+    mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) {
+      mnum = "0" + mnum;
+    }
+    var seconds = (now - grt) / 1000 - 24 * 60 * 60 * dnum - 60 * 60 * hnum - 60 * mnum;
+    snum = Math.round(seconds);
+    if (String(snum).length == 1) {
+      snum = "0" + snum;
+    }
+  }
+
+  // 更新网页中显示的网站运行时间
+  function updateHtml() {
+    const footer = document.getElementById("footer");
+    if (!footer) return
+    let currentTimeHtml = "";
+    if (nowHour < 18 && nowHour >= 9) {
+      // 如果是上班时间，默认就是"安知鱼-上班摸鱼中.svg"图片，不需要更改
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    } else {
+      // 如果是下班时间，插入"安知鱼-下班啦.svg"图片
+      let img = document.querySelector("#workboard .workSituationImg");
+      if (img != null) {
+        img.src = "https://npm.elemecdn.com/anzhiyu-blog@2.0.4/img/badge/安知鱼-下班啦.svg";
+        img.title = "摸了";
+        img.alt = "摸了";
+      }
+
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    }
+
+    if (document.getElementById("runtimeTextTip")) {
+      document.getElementById("runtimeTextTip").innerHTML = currentTimeHtml;
+    }
+  }
+
+  setInterval(() => {
+    updateTime();
+    updateHtml();
+  }, 1000);
+})();</script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.cbd.int/katex@0.16.0/dist/katex.min.css"><script src="https://cdn.cbd.int/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    anzhiyu.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div><script>Sakana.init({
+  character: 'chisato', // 角色，可选 'chisato' 或 'takina'
+  autoFit: true, // 是否自动适应容器大小
+  scale: 1, // 缩放比例
+  canSwitchCharacter: true, // 是否允许切换角色
+});</script></body></html>
