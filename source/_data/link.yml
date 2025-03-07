@@ -1,0 +1,23 @@
+- class_name: 友链
+  class_desc: 都是大佬😭
+  flink_style: anzhiyu
+  hundredSuffix: ""
+  link_list:
+    - name: 石上
+      link: https://lanweifrj.github.io
+      avatar: 
+      descr: ただ春風を待つ
+      recommend: true
+      color: vip
+    - name: 泽村睿
+      link: https://scientificw.github.io/
+      avatar: 
+      descr:
+      recommend: true
+      color: vip
+    - name: wendaining
+      link: https://kiriaotj.github.io
+      avatar: 
+      descr: 
+      recommend: true
+      color: vip

@@ -1,0 +1,206 @@
+{
+  "main": {
+    "id": "eb1db01aa45b1721",
+    "type": "split",
+    "children": [
+      {
+        "id": "07903034aa5d1de7",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "227d3006b2474643",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "线性代数复习提纲.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "线性代数复习提纲"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "7588fcb9b67277d9",
+    "type": "split",
+    "children": [
+      {
+        "id": "e37f3d8efae7951d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2f6acd5ea0b8ab70",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "bb9c7f811f5266b5",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "bc295dcb4eaae846",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "268885a5d1662e6f",
+    "type": "split",
+    "children": [
+      {
+        "id": "126ede1cf944c5d1",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f17d419e345793b7",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "本地部署deepseek-r1模型 评价——玩具 or not.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": false
+              },
+              "icon": "links-coming-in",
+              "title": "本地部署deepseek-r1模型 评价——玩具 or not 的反向链接列表"
+            }
+          },
+          {
+            "id": "bd810b1e6a226650",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "杭电acm入门.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "杭电acm入门 的出链列表"
+            }
+          },
+          {
+            "id": "8bda5a2cf9d9c317",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "8e5a8d1fcca43fc8",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "大学物理D学习笔记.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "大学物理D学习笔记 的大纲"
+            }
+          },
+          {
+            "id": "a8a624fb3614b519",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          }
+        ],
+        "currentTab": 3
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "templater-obsidian:Templater": false,
+      "workspaces:管理工作区布局": false,
+      "obsidian-excalidraw-plugin:新建绘图文件": false
+    }
+  },
+  "active": "227d3006b2474643",
+  "lastOpenFiles": [
+    "通信概论复习.md",
+    "线性代数复习提纲.md",
+    "markdown语法览.md",
+    "本地部署deepseek-r1模型 评价——玩具 or not.md",
+    "数学分析（下）学习笔记.md",
+    "大学物理D学习笔记.md",
+    "数学分析（上）复习提纲.md",
+    "杭电acm入门.md",
+    "（转载）做题家的困境与出路.md",
+    "1月7日之事.md",
+    "Pasted image 20250225215005.png",
+    "fakweb.org.md",
+    "习思想实践考核  模拟政协.md",
+    "tanpinsary.github.io.md"
+  ]
+}

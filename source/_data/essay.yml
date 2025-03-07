@@ -1,0 +1,11 @@
+- title: 闲言碎语
+  subTitle: 随口谈谈
+  tips: 真正意义上的日寄
+  buttonText: 关于我
+  buttonLink: /about/
+  limit: 30
+  home_essay: true
+  top_background: https://img02.anheyu.com/adminuploads/1/2022/08/21/630249e2df20f.jpg
+  essay_list:
+    - content: 摸了半个月大概是把博客弄了个半成品了，后面慢慢把图片加上，音乐馆配置好，bangumi补全，再挂点友链就问题不大了。期待有一天买个域名吧
+      data: 2025/01/22
